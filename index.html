@@ -205,6 +205,38 @@
   }
   .empty-note b{color:var(--text);}
 
+  .card.festival{
+    border:2px solid var(--accent);
+    background:linear-gradient(180deg, var(--accent-soft), var(--surface) 70%);
+    box-shadow:0 4px 18px -6px rgba(193,39,45,.25);
+  }
+  .card.festival::after{
+    width:5px;
+    background:var(--accent) !important;
+  }
+  .card.festival .date-block{
+    background:var(--accent);
+    border-color:var(--accent);
+  }
+  .card.festival .date-block .num{
+    color:#fff;
+    font-size:19px;
+    letter-spacing:-.02em;
+  }
+  .card.festival .date-block .mon{
+    color:#ffffffcc;
+  }
+  .tag.festival-tag{
+    background:var(--accent);
+    color:#fff;
+  }
+  .festival-list{
+    margin:0;
+    font-size:14.5px;
+    line-height:1.85;
+    color:var(--text);
+  }
+
   footer{
     padding-block:30px 40px;
     border-top:1.5px dashed var(--line);
@@ -402,6 +434,18 @@
       </div>
     </article>
 
+    <article class="card festival">
+      <div class="date-block">
+        <div class="num">15–17</div>
+        <div class="mon">אוק׳</div>
+      </div>
+      <div class="info">
+        <span class="tag festival-tag">פסטיבל</span>
+        <h2 class="artist">אינדינגב</h2>
+        <p class="festival-list">בין ההריסות, עמר גשן, עולמי, דג, ביולוגיה ימית, רוקרפוקטס, בוגי בלאגן, אזולאי/נמט, קוסטה קפלן, ביטפוט, עדיסקוטק, תלמה, שרי זק לוי</p>
+      </div>
+    </article>
+
     <article class="card">
       <div class="date-block">
         <div class="num">4</div>
@@ -527,11 +571,6 @@
   <section class="more-section">
     <h2 class="section-title">עוד בפסטיבל תל אביב <span class="range">1–8.11</span></h2>
     <p class="more-list">שרי זק לוי, תאיר חיים, סגול 59</p>
-  </section>
-
-  <section class="more-section">
-    <h2 class="section-title">עוד באינדינגב <span class="range">15–17.10</span></h2>
-    <p class="more-list">בין ההריסות, עמר גשן, עולמי, דג, ביולוגיה ימית, רוקרפוקטס, בוגי בלאגן, אזולאי/נמט, קוסטה קפלן, ביטפוט, עדיסקוטק, תלמה, שרי זק לוי</p>
   </section>
 
   <footer>
