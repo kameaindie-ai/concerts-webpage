@@ -177,6 +177,21 @@
   .spotify:hover{opacity:1;}
   .spotify svg{width:13px; height:13px; flex:none;}
 
+  .calendar{
+    align-self:flex-start;
+    display:inline-flex; align-items:center; gap:6px;
+    font-size:12.5px; font-weight:600;
+    color:var(--muted);
+    background:transparent;
+    border:none;
+    padding:8px 2px;
+    text-decoration:none;
+    opacity:.8;
+    transition:opacity .15s ease, color .15s ease;
+  }
+  .calendar:hover{opacity:1; color:var(--text);}
+  .calendar svg{width:14px; height:14px; flex:none;}
+
   .more-section{
     padding-block:8px 26px;
   }
@@ -1531,6 +1546,60 @@
     var todayStr = new Date().toLocaleDateString('en-CA');
     document.querySelectorAll('#shows .card[data-date]').forEach(function(card){
       if (card.getAttribute('data-date') < todayStr) card.remove();
+    });
+  })();
+
+  (function(){
+    function pad(n){ return String(n).padStart(2, '0'); }
+    function fmt(dt){
+      return dt.getFullYear() + pad(dt.getMonth() + 1) + pad(dt.getDate()) + 'T' + pad(dt.getHours()) + pad(dt.getMinutes()) + '00';
+    }
+    var calendarSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>';
+
+    document.querySelectorAll('#shows .card[data-date]').forEach(function(card){
+      var dateStr = card.getAttribute('data-date');
+      var parts = dateStr.split('-').map(Number);
+      var year = parts[0], month = parts[1], day = parts[2];
+
+      var timeEl = card.querySelector('.time');
+      var hours = 21, minutes = 0;
+      if (timeEl) {
+        var m = timeEl.textContent.match(/(\d{1,2}):(\d{2})/);
+        if (m) { hours = parseInt(m[1], 10); minutes = parseInt(m[2], 10); }
+      }
+
+      var start = new Date(year, month - 1, day, hours, minutes);
+      var end = new Date(start.getTime() + 2 * 60 * 60 * 1000);
+
+      var artistEl = card.querySelector('.artist');
+      var title = (artistEl ? artistEl.textContent.trim() : 'הופעה') + ' - הופעה';
+
+      var venueEl = card.querySelector('.venue');
+      var location = venueEl ? venueEl.textContent.trim() : '';
+
+      var params = new URLSearchParams({
+        action: 'TEMPLATE',
+        text: title,
+        dates: fmt(start) + '/' + fmt(end),
+        details: 'concerts.kameamusic.co.il',
+        ctz: 'Asia/Jerusalem'
+      });
+      if (location) params.set('location', location);
+
+      var actions = card.querySelector('.actions');
+      if (!actions) {
+        actions = document.createElement('div');
+        actions.className = 'actions';
+        card.querySelector('.info').appendChild(actions);
+      }
+
+      var a = document.createElement('a');
+      a.className = 'calendar';
+      a.href = 'https://calendar.google.com/calendar/render?' + params.toString();
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.innerHTML = calendarSvg + 'הוספה ליומן';
+      actions.appendChild(a);
     });
   })();
 </script>
